@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import BodyPart from '../components/BodyPart'; // Import the BodyPart component
+import BodyPart from '../components/BodyPart';
 import Detail from '../components/Detail';
 import ExerciseVideos from '../components/ExerciseVideos';
 import SimilarExercises from '../components/SimilarExercises';
@@ -37,7 +37,7 @@ const ExerciseDetail = () => {
     fetchExercisesData();
   }, [id]);
 
-  if (!exerciseDetail) return <div>No Data</div>;
+  if (!exerciseDetail) return <div>No Encontrado</div>;
 
   return (
     <Box sx={{ mt: { lg: '96px', xs: '60px' } }}>

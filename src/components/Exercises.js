@@ -1,13 +1,11 @@
 import { Box, Stack, Typography } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 import React, { useEffect, useState } from 'react';
-
-import { exerciseOptions, fetchData } from '../utils/fetchData';
 import ExerciseCard from './ExerciseCard';
 import Loader from './Loader';
 
 const Exercises = ({ bodyPart }) => {
-  const [exercises, setExercises] = useState([]); // Initialize exercises as an empty array
+  const [exercises, setExercises] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [exercisesPerPage] = useState(6);
 
@@ -16,27 +14,36 @@ const Exercises = ({ bodyPart }) => {
       let exercisesData = [];
 
       if (bodyPart === 'all') {
-        exercisesData = await fetchData('https://exercisedb.p.rapidapi.com/exercises', exerciseOptions);
+        exercisesData = await fetch('https://api.fitfusion.com/v1/exercises', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'YOUR_API_KEY',
+          },
+        });
       } else {
-        exercisesData = await fetchData(`https://exercisedb.p.rapidapi.com/exercises/bodyPart/${bodyPart}`, exerciseOptions);
+        exercisesData = await fetch(`https://api.fitfusion.com/v1/exercises?bodyPart=${bodyPart}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'YOUR_API_KEY',
+          },
+        });
       }
 
-      // Extract the exercise data from the response
-      const exercisesArray = exercisesData.results; // Assuming the exercise data is in the "results" property
+      const exercisesArray = await exercisesData.json();
       setExercises(exercisesArray);
     };
 
     fetchExercisesData();
   }, [bodyPart]);
 
-  // Pagination
   const indexOfLastExercise = currentPage * exercisesPerPage;
   const indexOfFirstExercise = indexOfLastExercise - exercisesPerPage;
   const currentExercises = exercises.slice(indexOfFirstExercise, indexOfLastExercise);
 
   const paginate = (event, value) => {
     setCurrentPage(value);
-
     window.scrollTo({ top: 1800, behavior: 'smooth' });
   };
 
@@ -44,7 +51,7 @@ const Exercises = ({ bodyPart }) => {
 
   return (
     <Box id="exercises" sx={{ mt: { lg: '109px' } }} mt="50px" p="20px">
-      <Typography variant="h4" fontWeight="bold" sx={{ fontSize: { lg: '44px', xs: '30px' } }} mb="46px">Showing Results</Typography>
+      <Typography variant="h4" fontWeight="bold" sx={{ fontSize: { lg: '44px', xs: '30px' } }} mb="46px">Mostrar resultados</Typography>
       <Stack direction="row" sx={{ gap: { lg: '107px', xs: '50px' } }} flexWrap="wrap" justifyContent="center">
         {currentExercises.map((exercise, idx) => (
           <ExerciseCard key={idx} exercise={exercise} />

@@ -1,5 +1,5 @@
+import { Box, Stack, Typography } from '@mui/material';
 import React from 'react';
-import { Typography, Box, Stack } from '@mui/material';
 import Loader from './Loader';
 
 const ExerciseVideos = ({ exerciseVideos, name }) => {
@@ -15,17 +15,17 @@ const ExerciseVideos = ({ exerciseVideos, name }) => {
           <a
             key={index}
             className="exercise-video"
-            href={`https://www.youtube.com/watch?v=${item.video.videoId}`}
+            href={`https://www.youtube.com/watch?v=${item.id.videoId}`}
             target="_blank"
             rel="noreferrer"
           >
-            <img style={{ borderTopLeftRadius: '20px' }} src={item.video.thumbnails[0].url} alt={item.video.title} />
+            <img style={{ borderTopLeftRadius: '20px' }} src={item.snippet.thumbnails.default.url} alt={item.snippet.title} />
             <Box>
               <Typography sx={{ fontSize: { lg: '28px', xs: '18px' } }} fontWeight={600} color="#000">
-                {item.video.title}
+                {item.snippet.title}
               </Typography>
               <Typography fontSize="14px" color="#000">
-                {item.video.channelName}
+                {item.snippet.channelTitle}
               </Typography>
             </Box>
           </a>
