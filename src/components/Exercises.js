@@ -6,7 +6,8 @@ import { exerciseOptions, fetchData } from '../utils/fetchData';
 import ExerciseCard from './ExerciseCard';
 import Loader from './Loader';
 
-const Exercises = ({ exercises, setExercises, bodyPart }) => {
+const Exercises = ({ bodyPart }) => {
+  const [exercises, setExercises] = useState([]); // Initialize exercises as an empty array
   const [currentPage, setCurrentPage] = useState(1);
   const [exercisesPerPage] = useState(6);
 
@@ -20,7 +21,9 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
         exercisesData = await fetchData(`https://exercisedb.p.rapidapi.com/exercises/bodyPart/${bodyPart}`, exerciseOptions);
       }
 
-      setExercises(exercisesData);
+      // Extract the exercise data from the response
+      const exercisesArray = exercisesData.results; // Assuming the exercise data is in the "results" property
+      setExercises(exercisesArray);
     };
 
     fetchExercisesData();
@@ -65,4 +68,3 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
 };
 
 export default Exercises;
-

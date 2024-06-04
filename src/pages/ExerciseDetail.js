@@ -1,11 +1,11 @@
+import { Box } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Box } from '@mui/material';
-
-import { exerciseOptions, fetchData, youtubeOptions } from '../utils/fetchData';
+import BodyPart from '../components/BodyPart'; // Import the BodyPart component
 import Detail from '../components/Detail';
 import ExerciseVideos from '../components/ExerciseVideos';
 import SimilarExercises from '../components/SimilarExercises';
+import { exerciseOptions, fetchData, youtubeOptions } from '../utils/fetchData';
 
 const ExerciseDetail = () => {
   const [exerciseDetail, setExerciseDetail] = useState({});
@@ -44,6 +44,8 @@ const ExerciseDetail = () => {
       <Detail exerciseDetail={exerciseDetail} />
       <ExerciseVideos exerciseVideos={exerciseVideos} name={exerciseDetail.name} />
       <SimilarExercises targetMuscleExercises={targetMuscleExercises} equipmentExercises={equipmentExercises} />
+      {/* Add the BodyPart component here */}
+      <BodyPart item={exerciseDetail.target} setBodyPart={() => {}} bodyPart={exerciseDetail.target} />
     </Box>
   );
 };
